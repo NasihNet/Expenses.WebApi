@@ -1,4 +1,5 @@
-﻿using Expenses.Db;
+﻿
+using ExpensesCore.DTO;
 
 
 namespace ExpensesCore
@@ -6,15 +7,15 @@ namespace ExpensesCore
     public interface IExpensesServices
     {
 
-        List<Expense> GetExpenses();
+        List<ExpenseDto> GetExpenses();
 
-        Expense GetExpense(int id);
+        ExpenseDto GetExpense(int id);
 
-        Expense CreateExpense(Expense expense);
+        ExpenseDto CreateExpense(Expenses.Db.Expense expense);
 
-        void DeleteExpense(Expense expense);
+        void DeleteExpense(ExpenseDto expense);
 
-        Expense EditExpense(Expense expense);
+        ExpenseDto EditExpense(ExpenseDto expense);
 
 
     }
