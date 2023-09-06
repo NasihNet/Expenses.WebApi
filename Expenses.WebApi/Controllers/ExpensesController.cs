@@ -1,9 +1,12 @@
-using Expenses.Db;
+using ExpensesCore.DTO;
 using ExpensesCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Expenses.WebApi.Controllers
-{     //this api we r using orm entity framework core
+{    //this api we r using orm entity framework core
+    //never put business logic on controller
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ExpensesController : ControllerBase
@@ -15,11 +18,9 @@ namespace Expenses.WebApi.Controllers
         }
 
         [HttpGet]
-        public  IActionResult GetExpenses()
+        public IActionResult GetExpenses()
         {
-
-             return Ok(_expensesServices.GetExpenses());
-        
+            return Ok(_expensesServices.GetExpenses());
         }
 
         [HttpGet("{id}", Name = "GetExpense")]
@@ -29,31 +30,24 @@ namespace Expenses.WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateExpense(Expense expense)
+        public IActionResult CreateExpense(Db.Expense expense)
         {
-        
             var newExpense = _expensesServices.CreateExpense(expense);
-
             return CreatedAtRoute("GetExpense", new { newExpense.Id }, newExpense);
-         
-           
         }
 
         [HttpDelete]
-        public IActionResult DeleteExpense(Expense expense)
-        { 
+        public IActionResult DeleteExpense(ExpenseDto expense)
+        {
             _expensesServices.DeleteExpense(expense);
             return Ok();
-        
         }
 
         [HttpPut]
-        public IActionResult EditExpense(Expense expense)
+        public IActionResult EditExpense(ExpenseDto expense)
         {
             return Ok(_expensesServices.EditExpense(expense));
         }
-
-
-
     }
+
 }
